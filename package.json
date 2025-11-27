@@ -1,6 +1,6 @@
 {
 	"name": "@zyrohub/utilities",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"author": "DMVMarcio",
 	"type": "module",
 	"description": "A collection of utility functions and classes.",
@@ -13,7 +13,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc && tsc-alias",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"test": "vitest run"
 	},
 	"repository": {
