@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="[https://i.imgur.com/KVVR2dM.png](https://i.imgur.com/KVVR2dM.png)">
+    <img src="https://i.imgur.com/KVVR2dM.png">
 </div>
 
 ## ZyroHub - Utilities
@@ -12,8 +12,8 @@
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
 - [Utilities](#utilities)
-  - [Terminal](#terminal)
-  - [Ansi / Colors](#ansi--colors)
+    - [Terminal](#terminal)
+    - [Ansi / Colors](#ansi--colors)
 
 ## Getting Started
 
