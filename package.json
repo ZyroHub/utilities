@@ -1,6 +1,6 @@
 {
 	"name": "@zyrohub/utilities",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": "DMVMarcio",
 	"type": "module",
 	"description": "A collection of utility functions and classes.",
@@ -13,7 +13,8 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc && tsc-alias"
+		"build": "tsc && tsc-alias",
+		"test": "vitest run"
 	},
 	"repository": {
 		"type": "git",
@@ -33,6 +34,7 @@
 	"devDependencies": {
 		"@types/node": "^24.5.2",
 		"tsc-alias": "^1.8.16",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"vitest": "^4.0.14"
 	}
 }
