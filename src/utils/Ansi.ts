@@ -6,13 +6,17 @@ export type AnsiColorFunction = (text: string) => string;
 export class Ansi {
 	private static createWrap(ansi_code: string, close_code?: string): AnsiColorFunction {
 		if (!isEnvColorsAllowed) {
-			return (text: string) => text;
+			return (text: string | number) => String(text);
 		}
 
 		close_code = close_code || ANSI_CODES.reset;
 
-		return (text: string) => {
-			const content = text.includes(close_code) ? text.replaceAll(close_code, close_code + ansi_code) : text;
+		return (text: string | number) => {
+			const textString = String(text);
+
+			const content = textString.includes(close_code)
+				? textString.replaceAll(close_code, close_code + ansi_code)
+				: textString;
 
 			return `${ansi_code}${content}${close_code}`;
 		};

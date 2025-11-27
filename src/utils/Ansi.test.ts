@@ -27,6 +27,13 @@ describe('Ansi Utility', () => {
 			expect(result).toBe(`${ANSI_CODES.red}${text}${ANSI_CLOSE_CODES.fg}`);
 		});
 
+		it('should handle number inputs correctly', () => {
+			const number = 12345;
+			const result = Ansi.blue(number);
+
+			expect(result).toBe(`${ANSI_CODES.blue}12345${ANSI_CLOSE_CODES.fg}`);
+		});
+
 		it('should wrap text with correct background codes (BgBlue)', () => {
 			const text = 'Background';
 			const result = Ansi.bgBlue(text);
@@ -76,6 +83,13 @@ describe('Ansi Utility', () => {
 			const result = Ansi.red(text);
 
 			expect(result).toBe(text);
+		});
+
+		it('should return plain stringified number', () => {
+			const number = 999;
+			const result = Ansi.red(number);
+
+			expect(result).toBe('999');
 		});
 
 		it('should return plain text even with nested calls', () => {
