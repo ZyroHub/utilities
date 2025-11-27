@@ -12,8 +12,8 @@
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
 - [Utilities](#utilities)
-    - [Terminal](#terminal)
-    - [Ansi / Colors](#ansi--colors)
+  - [Terminal](#terminal)
+  - [Ansi / Colors](#ansi--colors)
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ import { Terminal } from '@zyrohub/utilities';
 
 // Standard logging methods with predefined colors
 Terminal.success('BOOT', 'System started successfully');
-// Output example: 27/11/2025 10:00:00 | MY-APP | 8520 | [BOOT] System started successfully
+// Output example: 27/11 10:00:00 | MY-APP | 8520 | [BOOT] System started successfully
 
 Terminal.error('DB', ['Connection failed:', errorObject]);
 Terminal.info('USER', 'User logged in');
