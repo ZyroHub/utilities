@@ -12,9 +12,7 @@ export class Ansi {
 		close_code = close_code || ANSI_CODES.reset;
 
 		return (text: string) => {
-			const content = text.includes(close_code)
-				? text.replace(new RegExp(close_code, 'g'), close_code + ansi_code)
-				: text;
+			const content = text.includes(close_code) ? text.replaceAll(close_code, close_code + ansi_code) : text;
 
 			return `${ansi_code}${content}${close_code}`;
 		};
