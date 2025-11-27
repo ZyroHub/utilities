@@ -1,2 +1,3 @@
 export * from './Ansi.js';
 export * from './Terminal.js';
+export * from './Time.js';

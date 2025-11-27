@@ -14,6 +14,7 @@
 - [Utilities](#utilities)
     - [Terminal](#terminal)
     - [Ansi / Colors](#ansi--colors)
+    - [Time](#time)
 
 ## Getting Started
 
@@ -122,4 +123,32 @@ import { ANSI_CODES, ANSI_CLOSE_CODES, isEnvColorsAllowed } from '@zyrohub/utili
 if (isEnvColorsAllowed) {
 	console.log(`${ANSI_CODES.red}Manual Red Text${ANSI_CODES.reset}`);
 }
+```
+
+---
+
+### Time
+
+A utility for time manipulation and formatting.
+
+**Duration Formatting**
+
+Formats milliseconds into readable strings, automatically scaling to seconds (`s`) or minutes (`m`).
+
+```typescript
+import { Time } from '@zyrohub/utilities';
+
+console.log(Time.duration(500)); // "500ms"
+console.log(Time.duration(1500)); // "1.5s"
+console.log(Time.duration(90000)); // "1.5m"
+```
+
+**Sleep**
+
+Promise-based delay function to pause execution.
+
+```typescript
+import { Time } from '@zyrohub/utilities';
+
+await Time.sleep(1000); // Pauses execution for 1 second
 ```
