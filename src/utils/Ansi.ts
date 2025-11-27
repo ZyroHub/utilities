@@ -1,7 +1,7 @@
 import { ANSI_CLOSE_CODES, ANSI_CODES } from '@/constants/ansi.js';
 import { isEnvColorsAllowed } from '@/constants/env.js';
 
-export type AnsiColorFunction = (text: string) => string;
+export type AnsiColorFunction = (text: string | number) => string;
 
 export class Ansi {
 	private static createWrap(ansi_code: string, close_code?: string): AnsiColorFunction {
