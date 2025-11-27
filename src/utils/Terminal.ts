@@ -1,9 +1,10 @@
-import ansicolor, { type AnsicolorMethods } from 'ansicolor';
 import cluster from 'cluster';
 import process from 'node:process';
 
+import { Ansi, AnsiColorFunction } from './Ansi.js';
+
 export class Terminal {
-	static log(flag: string, flag_color: AnsicolorMethods, content: any[] | any) {
+	static log(flag: string, flag_color: AnsiColorFunction, content: any[] | any) {
 		content = ([] as string[]).concat(content);
 
 		const formattedDate = new Date()
@@ -19,29 +20,25 @@ export class Terminal {
 
 		const packageName = process.env.npm_package_name?.toUpperCase();
 
-		console.log(
-			ansicolor.darkGray(
-				`${formattedDate} |${packageName ? ` ${packageName} |` : ''}${!cluster.isPrimary ? ` ${process.pid} |` : ''} `
-			),
-			flag_color(`[${flag.toUpperCase()}]`),
-			...content
-		);
+		const prefix = `${formattedDate} |${packageName ? ` ${packageName} |` : ''}${!cluster.isPrimary ? ` ${process.pid} |` : ''} `;
+
+		console.log(Ansi.gray(prefix), flag_color(`[${flag.toUpperCase()}]`), ...content);
 	}
 
 	static success(flag: string, content: any[] | any) {
-		this.log(flag, ansicolor.lightGreen, content);
+		this.log(flag, Ansi.brightGreen, content);
 	}
 
 	static error(flag: string, content: any[] | any) {
-		this.log(flag, ansicolor.lightRed, content);
+		this.log(flag, Ansi.brightRed, content);
 	}
 
 	static info(flag: string, content: any[] | any) {
-		this.log(flag, ansicolor.lightCyan, content);
+		this.log(flag, Ansi.brightCyan, content);
 	}
 
 	static warn(flag: string, content: any[] | any) {
-		this.log(flag, ansicolor.lightYellow, content);
+		this.log(flag, Ansi.brightYellow, content);
 	}
 }
 
