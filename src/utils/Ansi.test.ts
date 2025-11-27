@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { ANSI_CODES, ANSI_CLOSE_CODES } from '../constants/ansi.js';
+import type { Ansi as AnsiType } from './Ansi.js';
 
 describe('Ansi Utility', () => {
-	let Ansi: any;
+	let Ansi: typeof AnsiType;
 
 	beforeEach(async () => {
 		vi.resetModules();
@@ -16,7 +17,6 @@ describe('Ansi Utility', () => {
 			}));
 
 			const module = await import('./Ansi.js');
-
 			Ansi = module.Ansi;
 		});
 

@@ -1,17 +1,19 @@
 import { ANSI_CLOSE_CODES, ANSI_CODES } from '@/constants/ansi.js';
 import { isEnvColorsAllowed } from '@/constants/env.js';
 
-export type AnsiColorFunction = (text: string | number) => string;
+export type AnsiInputText = string | number | null | undefined;
+
+export type AnsiColorFunction = (text: AnsiInputText) => string;
 
 export class Ansi {
 	private static createWrap(ansi_code: string, close_code?: string): AnsiColorFunction {
 		if (!isEnvColorsAllowed) {
-			return (text: string | number) => String(text);
+			return (text: AnsiInputText) => String(text);
 		}
 
 		close_code = close_code || ANSI_CODES.reset;
 
-		return (text: string | number) => {
+		return (text: AnsiInputText) => {
 			const textString = String(text);
 
 			const content = textString.includes(close_code)
