@@ -15,6 +15,8 @@
     - [Terminal](#terminal)
     - [Ansi / Colors](#ansi--colors)
     - [Time](#time)
+    - [FileSystem](#filesystem)
+    - [Validator](#validator)
 
 ## Getting Started
 
@@ -151,4 +153,63 @@ Promise-based delay function to pause execution.
 import { Time } from '@zyrohub/utilities';
 
 await Time.sleep(1000); // Pauses execution for 1 second
+```
+
+---
+
+### FileSystem
+
+A utility for file system operations.
+
+**Load Folder**
+
+Recursively loads files from a specified folder with options to filter and ignore certain files or folders.
+
+```typescript
+import { FileSystem } from '@zyrohub/utilities';
+
+const files = await FileSystem.loadFolder(
+	'/path/to/folder',
+	{
+		recursive: true, // Load files recursively (default: true)
+		auto_import: true, // Automatically import files (default: true)
+		auto_default: true, // Automatically use default export if available (default: true)
+		filter_files: [/\.ts$/, /\.js$/], // Only include .ts and .js files (optional) (accepts strings and regex)
+		filter_folders: ['src', 'lib'], // Only include these folders on recursive (optional) (accepts strings and regex)
+		ignore_files: ['.env'], // Ignore these files (optional) (accepts strings and regex)
+		ignore_folders: ['node_modules', '.git'] // Ignore these folders (optional) (accepts strings and regex)
+	},
+	// A callback for all files loaded
+	files => {
+		console.log('All files loaded!', files);
+	},
+	// A callback for each file loaded
+	file => {
+		console.log('File loaded!', file);
+	}
+);
+```
+
+### Validator
+
+A utility for schema validation using Zod, Yup, or class-validator.
+
+**Validate**
+
+Validates data against a provided schema.
+
+```typescript
+import { Validator } from '@zyrohub/utilities';
+import z from 'zod';
+
+// Zod schema
+const userSchema = z.object({
+	name: z.string(),
+	age: z.number().min(0)
+});
+
+const userData = { name: 'Alice', age: 30 };
+
+const validatedData = await Validator.validate(userSchema, userData);
+console.log(validatedData); // { success: true, data: { name: 'Alice', age: 30 } }
 ```

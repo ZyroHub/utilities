@@ -2,7 +2,18 @@ import type { ValidationError } from 'class-validator';
 import type * as yup from 'yup';
 import type { z } from 'zod';
 
+export interface ZodLikeSchema {
+	safeParseAsync(input: unknown): Promise<any> | any;
+}
+
+export interface YupLikeSchema {
+	validate(input: unknown, options?: any): Promise<any> | any;
+	__isYupSchema__: boolean;
+}
+
 type ClassConstructor<T = any> = { new (...args: any[]): T };
+
+export type ValidatorSchema = ZodLikeSchema | YupLikeSchema | ClassConstructor;
 
 export type InferSchemaType<T> = T extends { _def: any; parse: Function }
 	? T extends z.ZodType<infer U>

@@ -18,6 +18,7 @@ export interface FileSystemLoadFolderOptions {
 	auto_import?: boolean;
 	auto_default?: boolean;
 	filter_files?: (string | RegExp)[];
+	filter_folders?: (string | RegExp)[];
 	ignore_files?: (string | RegExp)[];
 	ignore_folders?: (string | RegExp)[];
 }
@@ -90,7 +91,7 @@ export class FileSystem {
 				});
 			} else {
 				if (FileSystem.shouldIgnoreFile(folderFile, options.ignore_files)) continue;
-				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_files)) continue;
+				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_folders)) continue;
 
 				let content: any = null;
 
