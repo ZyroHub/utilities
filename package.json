@@ -14,6 +14,7 @@
 	},
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"dev": "ztsc src/index.ts",
 		"test": "vitest run"
 	},
 	"repository": {
@@ -31,8 +32,34 @@
 	"devDependencies": {
 		"@types/node": "^24.5.2",
 		"@zyrohub/config-prettier": "^1.0.1",
+		"@zyrohub/ts-runner": "^0.0.3",
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.3",
+		"reflect-metadata": "^0.2.2",
 		"tsc-alias": "^1.8.16",
 		"typescript": "^5.9.2",
-		"vitest": "^4.0.14"
+		"vitest": "^4.0.14",
+		"yup": "^1.7.1",
+		"zod": "^4.3.5"
+	},
+	"peerDependencies": {
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.3",
+		"yup": "^1.7.1",
+		"zod": "^4.3.5"
+	},
+	"peerDependenciesMeta": {
+		"class-transformer": {
+			"optional": true
+		},
+		"class-validator": {
+			"optional": true
+		},
+		"yup": {
+			"optional": true
+		},
+		"zod": {
+			"optional": true
+		}
 	}
 }
