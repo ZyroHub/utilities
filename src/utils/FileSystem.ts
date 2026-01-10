@@ -17,11 +17,26 @@ export interface FileSystemLoadFolderOptions {
 	recursive?: boolean;
 	auto_import?: boolean;
 	auto_default?: boolean;
+	filter_files?: (string | RegExp)[];
 	ignore_files?: (string | RegExp)[];
 	ignore_folders?: (string | RegExp)[];
 }
 
 export class FileSystem {
+	static shouldIncludeFile(name: string, filterList: (string | RegExp)[] = []): boolean {
+		if (filterList.length === 0) return true;
+
+		for (const filterItem of filterList) {
+			if (typeof filterItem === 'string') {
+				if (filterItem === name) return true;
+			} else if (filterItem instanceof RegExp) {
+				if (filterItem.test(name)) return true;
+			}
+		}
+
+		return false;
+	}
+
 	static shouldIgnoreFile(name: string, ignoreList: (string | RegExp)[] = []): boolean {
 		for (const ignoreItem of ignoreList) {
 			if (typeof ignoreItem === 'string') {
@@ -67,6 +82,7 @@ export class FileSystem {
 			if (fileStats.isDirectory()) {
 				if (!options.recursive) continue;
 				if (FileSystem.shouldIgnoreFile(folderFile, options.ignore_folders)) continue;
+				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_files)) continue;
 
 				await FileSystem.loadFolder<FileContent>(filePath, options, undefined, async nestedFile => {
 					loadedFiles.push(nestedFile);
@@ -74,6 +90,7 @@ export class FileSystem {
 				});
 			} else {
 				if (FileSystem.shouldIgnoreFile(folderFile, options.ignore_files)) continue;
+				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_files)) continue;
 
 				let content: any = null;
 

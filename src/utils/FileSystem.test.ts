@@ -35,6 +35,21 @@ describe('FileSystem Utility', () => {
 		});
 	});
 
+	describe('shouldIncludeFile', () => {
+		it('should include files based on exact string match', () => {
+			const filterList = ['include-me.ts', 'data.json'];
+			expect(FileSystem.shouldIncludeFile('include-me.ts', filterList)).toBe(true);
+			expect(FileSystem.shouldIncludeFile('other.ts', filterList)).toBe(false);
+		});
+
+		it('should include files based on RegExp', () => {
+			const filterList = [/\.config\.ts$/, /^main_/];
+			expect(FileSystem.shouldIncludeFile('app.config.ts', filterList)).toBe(true);
+			expect(FileSystem.shouldIncludeFile('main_file.json', filterList)).toBe(true);
+			expect(FileSystem.shouldIncludeFile('other.ts', filterList)).toBe(false);
+		});
+	});
+
 	describe('loadFolder', () => {
 		const setupMockFileSystem = (structure: Record<string, string[]>) => {
 			vi.mocked(fs.readdir).mockImplementation(async dirPath => {
