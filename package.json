@@ -1,6 +1,6 @@
 {
 	"name": "@zyrohub/utilities",
-	"version": "1.0.14",
+	"version": "1.0.15",
 	"author": "DMVMarcio",
 	"type": "module",
 	"description": "A collection of utility functions and classes.",

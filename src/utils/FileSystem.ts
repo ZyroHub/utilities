@@ -27,15 +27,9 @@ export class FileSystem {
 	static shouldIncludeFile(name: string, filterList: (string | RegExp)[] = []): boolean {
 		if (filterList.length === 0) return true;
 
-		for (const filterItem of filterList) {
-			if (typeof filterItem === 'string') {
-				if (filterItem === name) return true;
-			} else if (filterItem instanceof RegExp) {
-				if (filterItem.test(name)) return true;
-			}
-		}
-
-		return false;
+		return filterList.some(filterItem =>
+			typeof filterItem === 'string' ? filterItem === name : filterItem.test(name)
+		);
 	}
 
 	static shouldIgnoreFile(name: string, ignoreList: (string | RegExp)[] = []): boolean {
