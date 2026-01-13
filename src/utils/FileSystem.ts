@@ -77,7 +77,7 @@ export class FileSystem {
 			if (fileStats.isDirectory()) {
 				if (!options.recursive) continue;
 				if (FileSystem.shouldIgnoreFile(folderFile, options.ignore_folders)) continue;
-				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_files)) continue;
+				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_folders)) continue;
 
 				await FileSystem.loadFolder<FileContent>(filePath, options, undefined, async nestedFile => {
 					loadedFiles.push(nestedFile);
@@ -85,7 +85,7 @@ export class FileSystem {
 				});
 			} else {
 				if (FileSystem.shouldIgnoreFile(folderFile, options.ignore_files)) continue;
-				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_folders)) continue;
+				if (!FileSystem.shouldIncludeFile(folderFile, options.filter_files)) continue;
 
 				let content: any = null;
 

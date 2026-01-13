@@ -113,6 +113,40 @@ describe('FileSystem Utility', () => {
 			expect(fileNames).not.toContain('lib.ts');
 		});
 
+		it('should respect filter_files options', async () => {
+			setupMockFileSystem({
+				[ROOT_DIR]: ['include.ts', 'exclude.js', 'also_include.json']
+			});
+
+			const files = await FileSystem.loadFolder(ROOT_DIR, {
+				filter_files: [/\.ts$/, 'also_include.json']
+			});
+
+			expect(files).toHaveLength(2);
+			const fileNames = files.map(f => f.name);
+			expect(fileNames).toContain('include.ts');
+			expect(fileNames).toContain('also_include.json');
+			expect(fileNames).not.toContain('exclude.js');
+		});
+
+		it('should respect filter_folders options with files', async () => {
+			setupMockFileSystem({
+				[ROOT_DIR]: ['file1.ts', 'include_this', 'exclude_this'],
+				[path.join(ROOT_DIR, 'include_this')]: ['file2.ts'],
+				[path.join(ROOT_DIR, 'exclude_this')]: ['file3.ts']
+			});
+
+			const files = await FileSystem.loadFolder(ROOT_DIR, {
+				recursive: true,
+				filter_folders: ['include_this']
+			});
+
+			const fileNames = files.map(f => f.name);
+			expect(fileNames).toContain('file1.ts');
+			expect(fileNames).toContain('file2.ts');
+			expect(fileNames).not.toContain('file3.ts');
+		});
+
 		it('should execute callbacks correctly', async () => {
 			setupMockFileSystem({
 				[ROOT_DIR]: ['fileA.ts', 'fileB.ts']
