@@ -11,12 +11,25 @@
 - [ZyroHub - Utilities](#zyrohub---utilities)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-- [Utilities](#utilities)
-    - [Terminal](#terminal)
-    - [Ansi / Colors](#ansi--colors)
-    - [Time](#time)
-    - [FileSystem](#filesystem)
-    - [Validator](#validator)
+- [Terminal](#terminal)
+	- [Custom Logging](#custom-logging)
+- [Ansi / Colors](#ansi--colors)
+	- [Basic Usage](#basic-usage)
+	- [Style Composition \& Nesting](#style-composition--nesting)
+	- [Available Methods](#available-methods)
+	- [Environment Variables](#environment-variables)
+	- [Exposed Constants](#exposed-constants)
+- [Time](#time)
+	- [Duration Formatting](#duration-formatting)
+	- [Sleep](#sleep)
+- [FileSystem](#filesystem)
+	- [Load Folder](#load-folder)
+- [Validator](#validator)
+	- [Validate](#validate)
+- [Objects](#objects)
+	- [isEqual](#isequal)
+	- [Clone](#clone)
+	- [isObject](#isobject)
 
 ## Getting Started
 
@@ -35,9 +48,7 @@ pnpm add @zyrohub/utilities
 bun add @zyrohub/utilities
 ```
 
-## Utilities
-
-### Terminal
+## Terminal
 
 A terminal service for beautifully formatted console outputs with timestamps, package names, and process IDs.
 
@@ -53,7 +64,7 @@ Terminal.info('USER', 'User logged in');
 Terminal.warn('MEM', 'High memory usage detected');
 ```
 
-**Custom Logging**
+### Custom Logging
 
 You can use the `log` method to define a custom flag and its color using the `Ansi` utility.
 
@@ -67,11 +78,11 @@ Terminal.log('DEBUG', Ansi.gray, ['Variable state:', { a: 1, b: 2 }]);
 
 ---
 
-### Ansi / Colors
+## Ansi / Colors
 
 A zero-dependency, type-safe ANSI formatter. It supports standard colors, bright variants, backgrounds, and text styles. It handles style nesting correctly and respects environment variables.
 
-**Basic Usage**
+### Basic Usage
 
 ```typescript
 import { Ansi } from '@zyrohub/utilities';
@@ -80,7 +91,7 @@ console.log(Ansi.red('This is red text'));
 console.log(Ansi.bgBlue(Ansi.white('White text on blue background')));
 ```
 
-**Style Composition & Nesting**
+### Style Composition & Nesting
 
 The `Ansi` utility intelligently handles nested styles, ensuring inner styles don't break the outer formatting.
 
@@ -91,7 +102,7 @@ const message = Ansi.bold(`Error: ${Ansi.red('File not found')} in ${Ansi.underl
 console.log(message);
 ```
 
-**Available Methods**
+### Available Methods
 
 All methods are static and available directly from the `Ansi` class.
 
@@ -103,7 +114,7 @@ All methods are static and available directly from the `Ansi` class.
 | **Bright BGs**    | `bgBrightRed`, `bgBrightGreen`, `bgBrightYellow`, `bgBrightBlue`, `bgBrightMagenta`, `bgBrightCyan`, `bgBrightWhite` |
 | **Styles**        | `bold`, `dim`, `italic`, `underline`, `blink`, `reverse`, `strikethrough`                                            |
 
-**Environment Variables**
+### Environment Variables
 
 The utility automatically detects if colors should be disabled based on the environment:
 
@@ -111,7 +122,7 @@ The utility automatically detects if colors should be disabled based on the envi
 - `FORCE_COLOR`: Forces color output even in non-TTY environments.
 - `TERM`: Checks for `dumb` terminals.
 
-**Exposed Constants**
+### Exposed Constants
 
 For advanced use cases, you can access the raw ANSI maps and environment status directly.
 
@@ -129,11 +140,11 @@ if (isEnvColorsAllowed) {
 
 ---
 
-### Time
+## Time
 
 A utility for time manipulation and formatting.
 
-**Duration Formatting**
+### Duration Formatting
 
 Formats milliseconds into readable strings, automatically scaling to seconds (`s`) or minutes (`m`).
 
@@ -145,7 +156,7 @@ console.log(Time.duration(1500)); // "1.5s"
 console.log(Time.duration(90000)); // "1.5m"
 ```
 
-**Sleep**
+### Sleep
 
 Promise-based delay function to pause execution.
 
@@ -157,11 +168,11 @@ await Time.sleep(1000); // Pauses execution for 1 second
 
 ---
 
-### FileSystem
+## FileSystem
 
 A utility for file system operations.
 
-**Load Folder**
+### Load Folder
 
 Recursively loads files from a specified folder with options to filter and ignore certain files or folders.
 
@@ -190,11 +201,11 @@ const files = await FileSystem.loadFolder(
 );
 ```
 
-### Validator
+## Validator
 
 A utility for schema validation using Zod, Yup, or class-validator.
 
-**Validate**
+### Validate
 
 Validates data against a provided schema.
 
@@ -212,4 +223,49 @@ const userData = { name: 'Alice', age: 30 };
 
 const validatedData = await Validator.validate(userSchema, userData);
 console.log(validatedData); // { success: true, data: { name: 'Alice', age: 30 } }
+```
+
+## Objects
+
+A utility for deep object manipulation.
+
+### isEqual
+
+Compares two objects for deep equality.
+
+```typescript
+import { Objects } from '@zyrohub/utilities';
+
+const obj1 = { a: 1, b: { c: 2 } };
+const obj2 = { a: 1, b: { c: 2 } };
+
+const areEqual = Objects.isEqual(obj1, obj2);
+console.log(areEqual); // true
+```
+
+### Clone
+
+Creates a deep clone of the provided object, ensuring no references are shared.
+
+```typescript
+import { Objects } from '@zyrohub/utilities';
+
+const original = { a: 1, b: { c: 2 } };
+const clone = Objects.clone(original);
+
+console.log(clone); // { a: 1, b: { c: 2 } }
+console.log(clone.b === original.b); // false (different references)
+```
+
+### isObject
+
+Checks if a value is a object.
+
+```typescript
+import { Objects } from '@zyrohub/utilities';
+
+const value = { a: 1, b: 2 };
+const isObject = Objects.isObject(value);
+
+console.log(isObject); // true
 ```
